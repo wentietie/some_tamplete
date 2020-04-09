@@ -21,6 +21,10 @@ Vue.component('payChild', payChild)
 import popWindow from './common/popWindow'
 Vue.component('popWindow', popWindow)
 
+// 导入弹窗js
+import model from 'common/showModel.js'
+Vue.prototype.model = model
+
 const app = new Vue({
     ...App
 })

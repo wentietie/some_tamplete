@@ -46,7 +46,17 @@
 				this.openPopWin()
 			},
 			openPopWin(){
-				this.popWin = !this.popWin
+				// this.popWin = !this.popWin
+				this.model.model({
+					content:'haha',
+					confirmText:'嘻嘻',
+					cancelText:'哈哈',
+					confirmColor:'red',
+					cancelText:'green',
+					callBack (res) {
+						console.log(res)
+					}
+				})
 			},
 			openPayComp(){
 				this.payView = true

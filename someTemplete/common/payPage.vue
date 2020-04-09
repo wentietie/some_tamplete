@@ -57,71 +57,26 @@
 
 				})
 				this.closePay()
-				this.$http.httpRequest(this.payOpts[0], this.payData[0]).then(res => {
-					console.log(res.data)
-					uni.hideLoading()
-					if (res.data.code == 1 || res.data.code == '0000') {
-						this.$http.wxPayMoney(JSON.stringify(res.data.res.app_response), response => {
-								uni.showToast({
-									title: '支付成功',
-									icon: 'none',
-									duration: 1500,
-									success() {
-										setTimeout(() => {
-											uni.navigateBack({
-
-											})
-										}, 1500)
-									}
-								})
-							},
-							err => {
-								console.log(err)
-								uni.showToast({
-									title: '支付失败',
-									icon: 'none',
-									duration: 1500
-								})
-							})
-					} else {
-						uni.showToast({
-							title: res.data.msg,
-							icon: 'none',
-							duration: 1500
-						})
-					}
+				// 请求签名
+				this.GF.request(this.payOpts, this.payData).then(res => {
+					this.GF.wxPay(res.data).then(response => {
+						console.log(response)
+						uni.hideLoading()
+					})
 				})
-
 			},
 			aliPay(){
 				var that = this
 				uni.showLoading({
-					
-				})
-				this.$http.httpRequest(this.payOpts[1], this.payData[1]).then(res => {
-					that.closePay()
-					uni.hideLoading()
-					that.$http.aliPayMoney(res.data.data.sing, success => {
-							uni.showToast({
-								title: '支付成功',
-								icon: 'none',
-								duration: 1500,
-								success() {
-									setTimeout(() => {
-										uni.navigateBack({
 				
-										})
-									}, 1500)
-								}
-							})
-						},
-						err => {
-							uni.showToast({
-								title: '支付失败',
-								icon: 'none',
-								duration: 1500
-							})
-						})
+				})
+				this.closePay()
+				// 请求签名
+				this.GF.request(this.payOpts, this.payData).then(res => {
+					this.GF.wxPay(res.data).then(response => {
+						console.log(response)
+						uni.hideLoading()
+					})
 				})
 			}
 		}
